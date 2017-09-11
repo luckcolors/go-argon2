@@ -143,12 +143,12 @@ func VerifyEncoded(s string, password []byte) (bool, error) {
 // getMode tries to extract the mode from an Argon2 encoded string.
 func getMode(s string) (int, error) {
 	switch {
+	case strings.HasPrefix(s, "$argon2id"):
+		return ModeArgon2id, nil
 	case strings.HasPrefix(s, "$argon2d"):
 		return ModeArgon2d, nil
 	case strings.HasPrefix(s, "$argon2i"):
 		return ModeArgon2i, nil
-	case strings.HasPrefix(s, "$argon2id"):
-		return ModeArgon2id, nil
 	default:
 		return -1, ErrDecodingFail
 	}
